@@ -12,8 +12,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class LG001 extends JFrame{
-	private Mainprocess main;
-	private TestFrm testFrm;
+	private LG000 main;
+	private ME001 testFrm;
 	
 	private JButton btnLogin;
 	private JButton btnInit;
@@ -96,7 +96,7 @@ public class LG001 extends JFrame{
 
 	
 	// mainProcess와 연동
-	public void setMain(Mainprocess main) {
+	public void setMain(LG000 main) {
 		this.main = main;
 	}
 	
