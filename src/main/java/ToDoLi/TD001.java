@@ -1,4 +1,4 @@
-package ToDoLI;
+package ToDoLi;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -163,6 +163,12 @@ public class TD001 extends JFrame{
 		setSize(400, 480);
 		setVisible(true);
 		
+	    ATB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "할일이 추가되었습니다.");
+				dispose();
+				}
+			});
 	}
 	
 	public static void main(String[] args){

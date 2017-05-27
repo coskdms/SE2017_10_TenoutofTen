@@ -1,4 +1,4 @@
-package todoli_ui_design;
+package ToDoLi;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -13,14 +13,15 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 
-public class LookTTEST extends JFrame {
+public class FM000 extends JFrame {
 
 	JPanel p1 = new JPanel();
 	JButton B1 = new JButton("달력");
 	JButton B2 = new JButton("시간표");
 	JTextArea JT1 = new JTextArea();
+	JButton LTB = new JButton("나가기"); // 보기 나가기 버튼
 	
-	LookTTEST(){
+	FM000(){
 		setTitle("보기");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
@@ -41,14 +42,28 @@ public class LookTTEST extends JFrame {
 		p1.setLocation(25, 20);
 		p1.setSize(200, 40);
 		
+		LTB.setBackground(new Color(60,184,120));
+		LTB.setFont(new Font("맑은 고딕",Font.BOLD,14));
+		LTB.setForeground(Color.WHITE);
+		add(LTB);
+		LTB.setLocation(855,20);
+		LTB.setSize(100,40);
+		
+		add(LTB);
 		add(p1);
 		
 		setSize(1000, 580);
 		setVisible(true);
 		
+	    LTB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "메뉴로 돌아갑니다.");
+				dispose();
+				}
+			});
 	}
 	
 	public static void main(String[] args){
-		new LookTTEST();
+		new FM000();
 	}
 }

@@ -11,9 +11,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class CL002 extends JFrame{
-   private Mainprocess main;
-   private TestFrm testFrm;
-   private DelCourseTest delcourse; 
+
    JPanel DCP1 = new JPanel();
    JLabel DCL = new JLabel("삭제할 강의명을 입력하세요.");
    JTextField DCF = new JTextField(20);
@@ -40,39 +38,18 @@ public class CL002 extends JFrame{
       DCB.setLocation(100,100);
       DCB.setSize(70,30);
       
-      DCB.addActionListener(new ActionListener() {         
-         private TestFrm testFrm;
-
-         public void actionPerformed(ActionEvent e) {
-            isDeletCheck();      
-         }
-
-         private void isDeletCheck() {
-            if(DCF != null){
-               JOptionPane.showMessageDialog(null, "Success");
-               //JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "강의 삭제", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-               bDeletCheck = true;
-               
-               if(isDelet()){
-                  delcourse.dispose();
-                  this.testFrm = new TestFrm();
-               }
-            }
-            else
-               JOptionPane.showMessageDialog(null, "Faild");
-         }
-
-         private boolean isDelet() {
-            // TODO Auto-generated method stub
-            return bDeletCheck;
-         }
-      });
-      
       add(DCP1);
       add(DCB);
       
       setSize(280,200);
       setVisible(true);
+      
+      DCB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "강의가 삭제되었습니다.");
+				dispose();
+			}
+		});
       
    }
    

@@ -139,6 +139,12 @@ public class CL003 extends JFrame{
       setSize(400, 480);
       setVisible(true);
       
+      ACB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "강의가 변경되었습니다.");
+					dispose();
+			}
+		});
    }
    
 

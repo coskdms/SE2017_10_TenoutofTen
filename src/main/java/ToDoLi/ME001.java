@@ -15,8 +15,8 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class ME001 extends JFrame{
-//	private Mainprocess main; 잠시 주석처리 !!!!!!
-//	private AddCourseTest addcoursetest;;
+	private LG000 main; 
+	private CL001 addcoursetest;;
 
 	JTextArea jta1 = new JTextArea(); // 강의출력화면
 	JTextArea jta2 = new JTextArea(); // 할일출력화면
@@ -147,6 +147,49 @@ public class ME001 extends JFrame{
 		
 		setSize(1380, 780); // 전체 프로그램 창 크기
 		setVisible(true);
+		
+		jb1.addActionListener(new ActionListener(){
+			//private AddCourse addCourse;
+			public void actionPerformed(ActionEvent e) {
+				new CL001();
+			}
+		});
+		jb2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new CL003();
+			}
+		});
+		jb3.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new CL002();
+			}
+		});
+		jb11.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "프로그램을 종료합니다.");
+				dispose();
+			}
+		});
+		jb4.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new TD001();
+			}
+		});
+		jb5.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new TD003();
+			}
+		});
+		jb6.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new TD002();
+			}
+		});
+		jb7.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new FM000();
+			}
+		});
 		
 	}
 
