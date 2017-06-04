@@ -1,29 +1,33 @@
 package ToDoLi;
 
-import javax.swing.JDialog;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+
 import java.util.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.*;
 import javax.swing.table.*;
 
-public class CL001 extends JFrame{
-	
-	JComboBox comboBoxYear = new JComboBox();
-	JComboBox comboBoxSemester = new JComboBox();
-	JComboBox comboBoxMon = new JComboBox();
-	JComboBox comboBoxDay = new JComboBox();
-	JComboBox comboBoxAPM = new JComboBox();
-	JComboBox comboBoxHour = new JComboBox();
-	JComboBox comboBoxMin = new JComboBox();
-			
+import ToDoLi.Serialize;
+
+
+public class CL001 extends JFrame {
+   
+   JComboBox comboBoxYear = new JComboBox();
+   JComboBox comboBoxSemester = new JComboBox();
+   JComboBox comboBoxDay = new JComboBox();
+   JComboBox comboBoxAPM = new JComboBox();
+   JComboBox comboBoxHour = new JComboBox();
+   JComboBox comboBoxMin = new JComboBox();
+         
    JPanel ACP1 = new JPanel(); // 강의정보 라벨 패널
    JPanel ACP2 = new JPanel(); // 강의정보 입력 패널
    JPanel DayP = new JPanel();
@@ -31,13 +35,16 @@ public class CL001 extends JFrame{
    
    JLabel ACL1 = new JLabel("강의명");
    JLabel ACL2 = new JLabel("담당교수");
-   JLabel ACL3 = new JLabel("강의날짜");
+   JLabel ACL3 = new JLabel("강의요일");
    JLabel ACL4 = new JLabel("강의시간");
    JLabel ACL5 = new JLabel("수강년도");
    JLabel ACL6 = new JLabel("수강학기");
    JTextField ACF1 = new JTextField(20);
    JTextField ACF2 = new JTextField(20);
-
+ 
+   BasicComboBoxRenderer render_Day = (BasicComboBoxRenderer)comboBoxDay.getRenderer(); // 콤보박스 가운데 정렬을 위해
+   private static ArrayList<Integer> CourseDatlist;
+   
    JButton ACB = new JButton("추가");
 
    public CL001(){
@@ -79,18 +86,11 @@ public class CL001 extends JFrame{
       ACP2.add(ACF2);
       
       // ACP2.add(ACF3);
-      ACP2.add(DayP);
-      DayP.setLayout(new GridLayout(1,2,0,0));
-      comboBoxMon.setModel(new DefaultComboBoxModel(new String[] {"1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"}));
-      comboBoxMon.setFont(new Font("맑은 고딕",Font.PLAIN,13));
-      comboBoxMon.setMaximumRowCount(3);
-      comboBoxMon.setBackground(Color.WHITE);
-      comboBoxDay.setModel(new DefaultComboBoxModel(new String[] {"1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일", "11일", "12일", "13일", "14일", "15일", "16일", "17일", "18일", "19일", "20일", "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "31일"}));
-      comboBoxDay.setMaximumRowCount(3);
+      ACP2.add(comboBoxDay);
+      comboBoxDay.setModel(new DefaultComboBoxModel(new String[] {"월", "화", "수", "목", "금", "토", "일"}));
       comboBoxDay.setFont(new Font("맑은 고딕",Font.PLAIN,13));
       comboBoxDay.setBackground(Color.WHITE);
-      DayP.add(comboBoxMon);
-      DayP.add(comboBoxDay);
+      render_Day.setHorizontalAlignment(DefaultListCellRenderer.CENTER); // 콤보박스 가운데 정렬
       
       // ACP2.add(ACF4);
       ACP2.add(TimeP);
@@ -111,18 +111,18 @@ public class CL001 extends JFrame{
       TimeP.add(comboBoxMin);
       
       // ACP2.add(ACF5);
-  	  comboBoxYear.setModel(new DefaultComboBoxModel(new String[] {"2012년","2013년","2014년","2015년","2016년","2017년", "2018년"}));
-  	  comboBoxYear.setFont(new Font("맑은 고딕",Font.PLAIN,13));
-  	  comboBoxYear.setMaximumRowCount(3);
-  	  comboBoxYear.setBackground(Color.WHITE);
-  	  ACP2.add(comboBoxYear);
-  	  
-  	  // ACP2.add(ACF6);
-  	  comboBoxSemester.setModel(new DefaultComboBoxModel(new String[] {"1학기", "2학기"}));
-  	  comboBoxSemester.setFont(new Font("맑은 고딕",Font.PLAIN,13));
-  	  comboBoxSemester.setBackground(Color.WHITE);
-  	  ACP2.add(comboBoxSemester);
-  	  
+       comboBoxYear.setModel(new DefaultComboBoxModel(new String[] {"2012년","2013년","2014년","2015년","2016년","2017년", "2018년"}));
+       comboBoxYear.setFont(new Font("맑은 고딕",Font.PLAIN,13));
+       comboBoxYear.setMaximumRowCount(3);
+       comboBoxYear.setBackground(Color.WHITE);
+       ACP2.add(comboBoxYear);
+       
+       // ACP2.add(ACF6);
+       comboBoxSemester.setModel(new DefaultComboBoxModel(new String[] {"1학기", "2학기"}));
+       comboBoxSemester.setFont(new Font("맑은 고딕",Font.PLAIN,13));
+       comboBoxSemester.setBackground(Color.WHITE);
+       ACP2.add(comboBoxSemester);
+       
       ACP2.setLocation(150, 30);
       ACP2.setSize(180, 300);
       
@@ -139,16 +139,66 @@ public class CL001 extends JFrame{
       setSize(400, 480);
       setVisible(true);
       
-      ACB.addActionListener(new ActionListener(){
+      ACB.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
+								
+				String courseName = ACF1.getText();
+				String courseProfessor = ACF2.getText();
+				String courseDay = (String)comboBoxDay.getSelectedItem();
+				String courseApm = (String)comboBoxAPM.getSelectedItem();
+				String courseHour = (String)comboBoxHour.getSelectedItem();
+				String courseMin = (String)comboBoxMin.getSelectedItem();
+				String courseYear = (String)comboBoxYear.getSelectedItem();
+				String courseSemester = (String)comboBoxSemester.getSelectedItem();
+				
+				ArrayList CourseDatList = new ArrayList();
+				
+				File file = new File("Course/Course.dat");
+				
+				if(file.isFile()) {	
+				try {
+					CourseDatList = Serialize.loadDat("Course/Course.dat");
+				} catch (IOException e2) {
+					
+					e2.printStackTrace();
+				}
+				
+				}
+				
+				int CourseValue = CourseDatList.size();				
+								
+				CourseDatList.add("\n");
+				CourseDatList.add(courseName);
+				CourseDatList.add(courseProfessor);
+				CourseDatList.add(courseDay);
+				CourseDatList.add(courseApm);
+				CourseDatList.add(courseHour);
+				CourseDatList.add(courseMin);
+				CourseDatList.add(courseYear);
+				CourseDatList.add(courseSemester);
+				
+										
+				try 
+				{
+					Serialize.saveDat(CourseDatList,"Course/Course.dat");
+				} 
+				
+				catch (IOException e1) 
+				{					
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(null, "강의가 추가되었습니다.");
-					dispose();
+				dispose();
 			}
 		});
    }
    
-
    public static void main(String[] args) {
       new CL001();
    }
 }
+
+
+
+
