@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+
 import java.util.*;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JDialog;
@@ -14,9 +16,18 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+
+
 public class ME001 extends JFrame{
 	private LG000 main; 
-	private CL001 addcoursetest;;
+	
+	
 
 	JTextArea jta1 = new JTextArea(); // 강의출력화면
 	JTextArea jta2 = new JTextArea(); // 할일출력화면
@@ -39,6 +50,8 @@ public class ME001 extends JFrame{
 	JTextField jf1 = new JTextField(10); // 검색 입력창
 	JLabel courseLabel = new JLabel("<강의목록>");
 	JLabel todoLabel = new JLabel("<할일목록>");
+	
+	ArrayList[][] table = new ArrayList[9][];
 	
 	ME001(){
 		setTitle("투두리_사용자");
@@ -188,6 +201,30 @@ public class ME001 extends JFrame{
 		jb7.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				new FM000();
+			}
+		});
+		jb8.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				try {
+					jta1.setText("");
+					
+					ArrayList<String> CourseDatList = new ArrayList();
+					CourseDatList = Serialize.loadDat("Course/Course.dat");
+					
+				Iterator iterator = CourseDatList.iterator();
+				
+				while(iterator.hasNext()) 
+					{
+						String element = (String) iterator.next();
+						jta1.append(element + "	");
+					}
+				}
+
+				catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+				jta1.append("\n");
 			}
 		});
 		
