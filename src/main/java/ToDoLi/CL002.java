@@ -7,6 +7,8 @@ import javax.swing.event.*;
 import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -18,7 +20,7 @@ public class CL002 extends JFrame{
    JButton DCB = new JButton("확인");
    private boolean bDeletCheck;
    
-   CL002(){
+   CL002() {
       setTitle("강의 삭제");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLayout(null);
@@ -46,8 +48,54 @@ public class CL002 extends JFrame{
       
       DCB.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "강의가 삭제되었습니다.");
-				dispose();
+				
+				ArrayList CourseDatList = new ArrayList();
+				
+				File file = new File("Course/Course.dat");
+				
+				if(file.isFile()) {	
+					try {
+						CourseDatList = Serialize.loadDat("Course/Course.dat");
+					} 
+				
+					catch (IOException e2) {
+						e2.printStackTrace();
+					}
+				}
+				
+				String courseName = DCF.getText();
+				
+				if(CourseDatList.contains(courseName)&&(CourseDatList.indexOf(courseName)%9==1))
+						{
+							int removeValue = CourseDatList.indexOf(courseName);
+							
+							int i = 0;
+							for(int ListValue=removeValue-1;i<9;i++) 
+							{
+								CourseDatList.remove(ListValue);
+							}
+						
+							
+							try 
+							{
+								Serialize.saveDat(CourseDatList,"Course/Course.dat");
+							} 
+							
+							catch (IOException e1) 
+							{					
+								e1.printStackTrace();
+							}
+							
+							JOptionPane.showMessageDialog(null, "강의가 삭제되었습니다.");
+							dispose();
+						}
+			
+			
+				
+				else {
+					JOptionPane.showMessageDialog(null, "해당 강의가 목록에 존재하지 않습니다.");
+					dispose();
+					}
 			}
 		});
       
