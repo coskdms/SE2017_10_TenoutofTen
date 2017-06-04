@@ -179,7 +179,7 @@ public class CL001 extends JFrame {
 				CourseDatList.add(courseSemester);
 				
 										
-				try 
+				try  
 				{
 					Serialize.saveDat(CourseDatList,"Course/Course.dat");
 				} 
