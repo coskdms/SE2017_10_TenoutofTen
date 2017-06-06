@@ -347,7 +347,7 @@ public class ME001 extends JFrame {
 							CheckValue=0;
 						
 						if((WSort==1||WSort==2||WSort==3||WSort==4)&&CheckValue==1)
-						{
+						{ 
 							ArrayList Overlap = new ArrayList();
 							
 							for(int KeyValue=0;KeyValue<WHsort.size();KeyValue++)
