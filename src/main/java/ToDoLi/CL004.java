@@ -40,17 +40,18 @@ public class CL004 extends JFrame {
    JLabel ACL5 = new JLabel("수강년도");
    JLabel ACL6 = new JLabel("수강학기");
    
-   JLabel ACF1 = new JLabel();;
+   JLabel ACF1 = new JLabel();
    JTextField ACF2 = new JTextField(20);
  
    BasicComboBoxRenderer render_Day = (BasicComboBoxRenderer)comboBoxDay.getRenderer(); // 콤보박스 가운데 정렬을 위해
    private static ArrayList<Integer> CourseDatlist;
    
    JButton ACB = new JButton("변경");
+   JButton ACB2 = new JButton("취소");
 
    public CL004(String courseName){
 	   
-      setTitle("강의변경");
+      setTitle("강의 변경");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLayout(null);
       
@@ -84,7 +85,6 @@ public class CL004 extends JFrame {
       ACP1.setSize(100,300);
       
       ACP2.setLayout(new GridLayout(6,1,0,25));
-      ACF1 = new JLabel(courseName);;
       ACP2.add(ACF1);
       ACP2.add(ACF2);
       
@@ -132,8 +132,14 @@ public class CL004 extends JFrame {
       ACB.setBackground(new Color(60,184,120));
       ACB.setFont(new Font("맑은 고딕",Font.BOLD,13));
       ACB.setForeground(Color.WHITE);
-      ACB.setLocation(150, 365);
+      ACB.setLocation(100, 365);
       ACB.setSize(90,35);
+      
+      ACB2.setBackground(new Color(60,184,120));
+      ACB2.setFont(new Font("맑은 고딕",Font.BOLD,13));
+      ACB2.setForeground(Color.WHITE);
+      ACB2.setLocation(200, 365);
+      ACB2.setSize(90,35);
       
       ArrayList CourseDatList = new ArrayList();
 		
@@ -152,7 +158,7 @@ public class CL004 extends JFrame {
 		
 		int ChangeValue = CourseDatList.indexOf(courseName)+1;
     
-		
+		ACF1.setText(courseName);
 		ACF2.setText(CourseDatList.get(ChangeValue).toString());
 		ChangeValue++;
 		comboBoxDay.setSelectedItem(CourseDatList.get(ChangeValue));
@@ -172,6 +178,7 @@ public class CL004 extends JFrame {
       add(ACP1);
       add(ACP2);
       add(ACB);
+      add(ACB2);
       
       setSize(400, 480);
       setVisible(true);
@@ -239,13 +246,16 @@ public class CL004 extends JFrame {
 				dispose();
 			}
 		});
+      ACB2.addActionListener(new ActionListener() {
+
+   			public void actionPerformed(ActionEvent e) {
+   				JOptionPane.showMessageDialog(null, "강의 변경이 취소되었습니다.");
+   				dispose();
+   			}
+      });
    }
    
    public static void main(String[] args) {
 	  
    }
 }
-
-
-
-

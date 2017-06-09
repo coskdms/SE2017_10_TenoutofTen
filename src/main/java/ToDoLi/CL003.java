@@ -21,7 +21,7 @@ public class CL003 extends JFrame{
    private boolean bDeletCheck;
    
    CL003() {
-      setTitle("강의 삭제");
+      setTitle("강의 변경");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLayout(null);
       
