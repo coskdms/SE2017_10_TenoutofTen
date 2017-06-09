@@ -18,6 +18,7 @@ public class CL002 extends JFrame{
    JLabel DCL = new JLabel("삭제할 강의명을 입력하세요.");
    JTextField DCF = new JTextField(20);
    JButton DCB = new JButton("확인");
+   JButton DCB2 = new JButton("취소");
    private boolean bDeletCheck;
    
    CL002() {
@@ -37,67 +38,82 @@ public class CL002 extends JFrame{
       DCB.setBackground(new Color(60,184,120));
       DCB.setFont(new Font("맑은 고딕",Font.BOLD,13));
       DCB.setForeground(Color.WHITE);
-      DCB.setLocation(100,100);
+      DCB.setLocation(50,100);
       DCB.setSize(70,30);
+      
+      DCB2.setBackground(new Color(60,184,120));
+      DCB2.setFont(new Font("맑은 고딕",Font.BOLD,13));
+      DCB2.setForeground(Color.WHITE);
+      DCB2.setLocation(150,100);
+      DCB2.setSize(70,30);
       
       add(DCP1);
       add(DCB);
+      add(DCB2);
       
       setSize(280,200);
       setVisible(true);
       
       DCB.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				
-				ArrayList CourseDatList = new ArrayList();
-				
-				File file = new File("Course/Course.dat");
-				
-				if(file.isFile()) {	
-					try {
-						CourseDatList = Serialize.loadDat("Course/Course.dat");
-					} 
-				
-					catch (IOException e2) {
-						e2.printStackTrace();
-					}
-				}
-				
-				String courseName = DCF.getText();
-				
-				if(CourseDatList.contains(courseName)&&(CourseDatList.indexOf(courseName)%9==1))
-						{
-							int removeValue = CourseDatList.indexOf(courseName);
-							
-							int i = 0;
-							for(int ListValue=removeValue-1;i<9;i++) 
-							{
-								CourseDatList.remove(ListValue);
-							}
-						
-							
-							try 
-							{
-								Serialize.saveDat(CourseDatList,"Course/Course.dat");
-							} 
-							
-							catch (IOException e1) 
-							{					
-								e1.printStackTrace();
-							}
-							
-							JOptionPane.showMessageDialog(null, "강의가 삭제되었습니다.");
-							dispose();
-						}
-			
-			
-				
-				else {
-					JOptionPane.showMessageDialog(null, "해당 강의가 목록에 존재하지 않습니다.");
-					dispose();
-					}
-			}
-		});
+         public void actionPerformed(ActionEvent e) {
+            
+            ArrayList CourseDatList = new ArrayList();
+            
+            File file = new File("Course/Course.dat");
+            
+            if(file.isFile()) {   
+               try {
+                  CourseDatList = Serialize.loadDat("Course/Course.dat");
+               } 
+            
+               catch (IOException e2) {
+                  e2.printStackTrace();
+               }
+            }
+            
+            String courseName = DCF.getText();
+            
+            if(CourseDatList.contains(courseName)&&(CourseDatList.indexOf(courseName)%9==1))
+                  {
+                     int removeValue = CourseDatList.indexOf(courseName);
+                     System.out.println(removeValue+"\n");
+                     
+                     int i = 0;
+                     for(int ListValue=removeValue-1;i<9;i++) 
+                     {
+                        System.out.println(ListValue+"\n");
+                        CourseDatList.remove(ListValue);
+                     }
+                  
+                     
+                     try 
+                     {
+                        Serialize.saveDat(CourseDatList,"Course/Course.dat");
+                     } 
+                     
+                     catch (IOException e1) 
+                     {               
+                        e1.printStackTrace();
+                     }
+                     
+                     JOptionPane.showMessageDialog(null, "강의가 삭제되었습니다.");
+                     dispose();
+                  }
+         
+         
+            
+            else {
+               JOptionPane.showMessageDialog(null, "해당 강의가 목록에 존재하지 않습니다.");
+               dispose();
+               }
+         }
+      });
+      DCB2.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "강의 삭제를 취소합니다.");
+            dispose();
+         }
+      });
       
    }
    
