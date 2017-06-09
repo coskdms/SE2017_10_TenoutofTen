@@ -46,9 +46,10 @@ public class CL001 extends JFrame {
    private static ArrayList<Integer> CourseDatlist;
    
    JButton ACB = new JButton("추가");
+   JButton ACB2 = new JButton("취소");
 
    public CL001(){
-      setTitle("강의추가");
+      setTitle("강의 추가");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLayout(null);
       
@@ -129,12 +130,19 @@ public class CL001 extends JFrame {
       ACB.setBackground(new Color(60,184,120));
       ACB.setFont(new Font("맑은 고딕",Font.BOLD,13));
       ACB.setForeground(Color.WHITE);
-      ACB.setLocation(150, 365);
+      ACB.setLocation(100, 365);
       ACB.setSize(90,35);
+      
+      ACB2.setBackground(new Color(60,184,120));
+      ACB2.setFont(new Font("맑은 고딕",Font.BOLD,13));
+      ACB2.setForeground(Color.WHITE);
+      ACB2.setLocation(200, 365);
+      ACB2.setSize(90,35);
 
       add(ACP1);
       add(ACP2);
       add(ACB);
+      add(ACB2);
       
       setSize(400, 480);
       setVisible(true);
@@ -143,14 +151,26 @@ public class CL001 extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 								
-				String courseName = ACF1.getText();
-				String courseProfessor = ACF2.getText();
+				String courseName = ACF1.getText().trim();
+				String courseProfessor = ACF2.getText().trim();
 				String courseDay = (String)comboBoxDay.getSelectedItem();
 				String courseApm = (String)comboBoxAPM.getSelectedItem();
 				String courseHour = (String)comboBoxHour.getSelectedItem();
 				String courseMin = (String)comboBoxMin.getSelectedItem();
 				String courseYear = (String)comboBoxYear.getSelectedItem();
 				String courseSemester = (String)comboBoxSemester.getSelectedItem();
+				
+			if(courseName.length()==0)
+			{
+				JOptionPane.showMessageDialog(null, "강의명을 입력해 주십시오.");
+			}
+			
+			else if(courseProfessor.length()==0)
+			{
+				JOptionPane.showMessageDialog(null, "담당 교수님 이름을 입력해 주십시오.");
+			}
+			
+			else {
 				
 				ArrayList CourseDatList = new ArrayList();
 				
@@ -166,6 +186,23 @@ public class CL001 extends JFrame {
 				
 				}
 				
+				ArrayList OverlapList = new ArrayList();
+				
+				for(int Overlap=0;Overlap<CourseDatList.size();Overlap++)
+               	{
+               	   if(Overlap%9==0&&CourseDatList.size()>2)
+               	   {
+               		   System.out.println(CourseDatList.get(Overlap+1));
+               		   OverlapList.add(CourseDatList.get(Overlap+1));
+               	   }
+               	}
+
+               if(OverlapList.contains(courseName))
+               	   JOptionPane.showMessageDialog(null, "이미 추가된 강의 입니다.");
+               
+               else {
+            	   OverlapList.clear();
+				
 				int CourseValue = CourseDatList.size();				
 								
 				CourseDatList.add("\n");
@@ -177,7 +214,6 @@ public class CL001 extends JFrame {
 				CourseDatList.add(courseMin);
 				CourseDatList.add(courseYear);
 				CourseDatList.add(courseSemester);
-				
 										
 				try
 				{
@@ -191,14 +227,21 @@ public class CL001 extends JFrame {
 				JOptionPane.showMessageDialog(null, "강의가 추가되었습니다.");
 				dispose();
 			}
+			}
+			}
+			
 		});
+      ACB2.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "강의 추가가 취소되었습니다.");
+				dispose();
+			}
+      });
    }
    
    public static void main(String[] args) {
       new CL001();
    }
 }
-
-
-
 
